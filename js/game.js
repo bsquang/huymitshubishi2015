@@ -196,17 +196,11 @@ var listWord = [{
     $(window).scrollTop(0);
     
     
-    if (current == 1) {
-      if(localStorage.infoEnable == '0'){
-            current = 6;      
-      }else if(localStorage.infoEnable == '1'){
-            current += 1; 
-      }
+    if (current == 9) {
+      current = 1;
     }
-    else{
-      
-      current += 1;
-      
+    else{      
+      current += 1;      
     }
     
     gotoPage(current);  
