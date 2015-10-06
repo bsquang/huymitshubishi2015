@@ -304,7 +304,7 @@ var listWord = [{
             if(checkGame())
             {
                   clearTimeout(gamingTIMEOUT);
-                  alert("DONE")
+                  //alert("DONE")
                   nextBUTTON();
             }
             // alert(drag_obj_1)
