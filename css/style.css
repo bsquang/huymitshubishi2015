@@ -240,3 +240,30 @@ top: 140px;
 .btn-touched img{
   display:inline;
 }
+
+
+.main-picture{
+    position: absolute;
+    z-index: 9;
+    width: 610px;
+    left: 310px;
+    top: 160px;
+}
+
+.time-text{
+      position: absolute;
+    color: white;
+    font-size: 130px;
+    z-index: 9;
+    left: 60px;
+    bottom: 60px;
+}
+
+.time-text-result{
+    position: absolute;
+    font-size: 80px;
+    z-index: 9;
+    left: 700px;
+    top: 420px;
+    color: white;
+}

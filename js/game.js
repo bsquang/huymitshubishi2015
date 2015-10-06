@@ -190,14 +190,41 @@ var listWord = [{
     
     current = id;
   }
-  
+  $("#input01").change(function(){checkINPUT()});
+   $("#input02").change(function(){checkINPUT()});
+    $("#input03").change(function(){checkINPUT()});
+    
+  function checkINPUT() {
+      if ($("#input01").val() != '' & $("#input02").val() != '' & $("#input03").val() != '' ) {
+            $("#btn-next").show();
+      }
+  }
   function nextBUTTON() {
     
     $(window).scrollTop(0);
     
-    
-    if (current == 9) {
-      current = 1;
+    if (current == 5) {
+      countPreview();
+      current += 1;  
+    }
+    else if (current == 6) {
+      
+      if (cntGameTiming > 0) {
+            
+            var finalScore = 15000 - cntGameTiming;
+            $(".time-text-result").html(finalScore+"<br>ms")
+            current = 7;
+            
+            setTimeout(function(){nextBUTTON()},3000)
+      }
+      
+    }
+    else if (current == 7) {
+      setTimeout(function(){nextBUTTON()},3000)
+      current = 8;
+    }
+    else if (current == 8) {
+      location.href = '';
     }
     else{      
       current += 1;      
@@ -206,92 +233,9 @@ var listWord = [{
     gotoPage(current);  
       
   }
-  
-  function gameStart(){
-    nextBUTTON();
-    readyGame();
-  }
-  
-  //Count down function
-  function countdown(t, callback) { // t la tong so giay, tinh ra so phut va so giay
-      if (t > 0) {
-          if (isClockRun) {
-              t -= 1;
-              var m;
-              var s;
-              if (t > 60) {
-                  var m = t / 60;
-                  m = checkTime(m);
-                  var s = t % 60;
-                  s = checkTime(s);
-              } else {
-                  m = "00";
-                  s = checkTime(t);
-              }
-  
-              var txtClock = m + ":" + s;
-  
-              $("#clock").text(txtClock);
-              setTimeout(function() {
-                  countdown(t, callback)
-              }, 1000);
-              
-          } else {
-              $("#clock").text("00:00");
-          }
-  
-      } else {
-          callback();
-      }
-  
-  }
-  
-  function checkScore(s) {
-      if (s < 0) {
-          s = "" + s;
-      }else if (s < 10) {
-          s = "000" + s;
-      }else if (s < 100) {
-          s = "00" + s;
-      }else if (s < 1000) {
-          s = "0" + s;
-      }
-      return s;
-  }
-  
-  function checkTime(i) {
-      if (i < 10) {
-          i = "0" + i
-      }; // add zero in front of numbers < 10
-      return i;
-  }
-  
-  function setTitle(key) {
-    //$("#title").text(listTile[key]);
-  }
-      //Game function
-  function randomWord() {
-  
-      var listBtnGame = $(".btn-game");
-      var arrayNewBtnID = shuffle(arrayBtnID);
-      for (var i = 0; i < listBtnGame.length; i++) {
-          listBtnGame.eq(i).attr("data-id", arrayBtnID[i]);
-  
-          var mWord = listWord[arrayBtnID[i] - 1]["word"];
-          var mScore = listWord[arrayBtnID[i] - 1]["score"];
-          listBtnGame.eq(i).attr("data-score", mScore);
-  
-          listBtnGame.eq(i).empty();
-          if (mWord.indexOf("<img") > -1) {
-              listBtnGame.eq(i).append(mWord);
-          } else {
-              listBtnGame.eq(i).text(mWord);
-          }
-  
-      }
-  
-  }
-  
+
+
+ 
   function shuffle(array) {
       var currentIndex = array.length,
           temporaryValue, randomIndex;
@@ -312,83 +256,107 @@ var listWord = [{
       return array;
   }
   
-  function initGame() {
-      mScore = 0;
-      $("#score").text("0000");
-      randomWord();
-      $(".btn-game").css("opacity", "1.0");
-  }
+  var arrayShuffer = [1,2,3,4,5,6,7,8,9];
+  var drag_obj_1 = undefined;
+  var drag_obj_2 = undefined;
   
-  function readyGame() {
-      initGame();
-      //setTitle("newgame");
-  
-      setTimeout(function() {
-          $(".btn-game").addClass("btn-touched");
-          isClockRun = true;
-          waitToStart();
-      }, 1000);
-  
-  }
-  
-  function waitToStart() {
-      //setTitle("ready");
-      countdown(waitTime, function() {
-          startGame();
-      });
-  }
-  
-  function startGame() {
-      //setTitle("start");
-      countBtn = $(".btn-game").length;
-  
-      $(".btn-game").removeClass("btn-touched");
-      isStart = true;
+  function bsqinitGame(){
+      arrayShuffer = shuffle(arrayShuffer);
       
-      countdown(playTime, function() {
-          stopGame();
-      });
+      for(var i=0;i<arrayShuffer.length;i++){
+            var temp = $(".obj-img")[i];
+            console.log($(temp).attr("original-id") + " " + arrayShuffer[i]);
+            $(temp).attr("original-id", arrayShuffer[i])
+            temp.src = "img/BIG/BIG ("+arrayShuffer[i]+").png";
+      }
+      
   }
-  
-  function stopGame() {
-    
-      isStart = false;
-      isClockRun = false;     
-      
-      
-      if (countBtn <= 0) {
-            if (mScore >= 200) {
-                  
-                  setTimeout(function(){
-                        gotoPage(8);
-                  },3000);
-                  
-            }else if(mScore < 200){
-                  setTimeout(function(){
-                        gotoPage(9);
-                  },3000);
+  function checkGame() {
+      for(var i=0;i<arrayShuffer.length;i++){
+            var temp = $(".obj-img")[i];
+            if ($(temp).attr("original-id") != $(temp).attr("game-id")) {
+                  return false;
             }
-      } else {
-            setTimeout(function(){
-                  gotoPage(9);
-            },3000);
+      }
+      return true;
+  }
+  $(".obj-img").click(function(){
+      
+      if (drag_obj_1 == undefined) {
+            drag_obj_1 = $(this)
+            
+            //alert(drag_obj_1)
+      }
+      else if (drag_obj_1 != undefined && drag_obj_2 == undefined) {
+            drag_obj_2 = $(this)
+            
+            drag_obj_1[0].src = "img/BIG/BIG ("+drag_obj_2.attr("original-id")+").png";
+            drag_obj_2[0].src = "img/BIG/BIG ("+drag_obj_1.attr("original-id")+").png";
+            
+            var old_1 = drag_obj_1.attr("original-id")
+            var old_2 = drag_obj_2.attr("original-id")
+            
+            drag_obj_1.attr("original-id" , old_2)
+            drag_obj_2.attr("original-id" , old_1)
+            
+            drag_obj_1 = drag_obj_2 = undefined;
+            
+            if(checkGame())
+            {
+                  clearTimeout(gamingTIMEOUT);
+                  alert("DONE")
+                  nextBUTTON();
+            }
+            // alert(drag_obj_1)
       }
       
       
-  }
-  
-  function resetGame() {
-      //setTitle("newgame");
-      countBtn = $(".btn-game").length;
       
-      $(".btn-game").css("opacity", "0.0");
-      $(".btn-game").removeClass("btn-touched");
-      //setTimeout(function(){readyGame();},5000);
+})
+  
+  function initGame() {
+      
+      
+      
   }
   
-  function restartApp() {
-      window.location.href = '';
+  var cntPreview = 10;
+  function countPreview() {
+      setTimeout(function(){
+            cntPreview -= 1;
+            $(".time-text").html(cntPreview)
+            if (cntPreview <= 0) {
+                  gaming();
+            }else{
+                  countPreview();
+            }
+      },1000)
   }
+  
+  function gaming() {
+      bsqinitGame();
+      $(".time-text").html("15")
+      countGameTiming()
+  }
+  
+  var cntGameTiming = 15000;
+  var gamingTIMEOUT;
+  function countGameTiming() {
+      gamingTIMEOUT = setTimeout(function(){
+            cntGameTiming -= 100;
+            $(".time-text").html(cntGameTiming/1000)
+            if (cntGameTiming <= 0) {
+                  $(".obj-fail").show();
+                  setTimeout(function(){
+                        location.href = '';
+                  },3000)
+            }else{
+                  countGameTiming();
+            }
+      },100)
+  }
+  
+  
   
 
 initSaveConfig();

@@ -18,41 +18,61 @@
   <div class="wrapper">
     
     <div class='page' bsq-id='1' style='display: block'>
-      <div class='background' style="background: url('img/SCENE (1).png')"></div>
-      <div class='bsq-button animated' style='bottom: 20px;right: 20px;' onclick='nextBUTTON()'>TIẾP THEO</div>
+      <div class='background' style="background: url('img/SCENE (1).png')" onclick='nextBUTTON()'></div>
+      <!--<div class='bsq-button animated' style='bottom: 20px;right: 20px;' onclick='nextBUTTON()'>TIẾP THEO</div>-->
     </div>
     <div class='page' bsq-id='2'>
-      <div class='background' style="background: url('img/SCENE (2).png')"></div>
-      <div class='bsq-button animated' style='bottom: 20px;right: 20px;' onclick='nextBUTTON()'>TIẾP THEO</div>
+      <div class='background' style="background: url('img/SCENE (2).png')" onclick='nextBUTTON()'> </div>
+      <!--<div class='bsq-button animated' style='bottom: 20px;right: 20px;' onclick='nextBUTTON()'>TIẾP THEO</div>-->
     </div>
     <div class='page' bsq-id='3'>
       <div class='background' style="background: url('img/SCENE (3).png')"></div>
-      <div class='bsq-button animated' style='bottom: 20px;right: 20px;' onclick='nextBUTTON()'>TIẾP THEO</div>
+      <div style='position: absolute;    text-align: center;    width: 700px;    z-index: 9;    left: 180px;        top: 205px;'>
+        <input id='input01' style="border: none; margin-bottom: 13px;    width: 100%;    height: 65px;    text-align: center;    font-size: 36px;" type="text" placeholder="Họ và tên" />
+        <input id='input02' style="border: none;margin-bottom: 13px;    width: 100%;    height: 65px;    text-align: center;    font-size: 36px;" type="text" placeholder="Số điện thoại" />
+        <input id='input03' style="border: none;    width: 100%;    height: 65px;    text-align: center;    font-size: 36px;" type="text" placeholder="Email" />
+      </div>
+      <img id='btn-next' src='img/BUTTON.png' style='    position: absolute;    left: 460px;    top: 560px;    z-index: 9; display: none' onclick='nextBUTTON()'> 
+      
     </div>
     <div class='page' bsq-id='4'>
       <div class='background' style="background: url('img/SCENE (4).png')"></div>
       <div class='bsq-button animated' style='bottom: 20px;right: 20px;' onclick='nextBUTTON()'>TIẾP THEO</div>
     </div>
     <div class='page' bsq-id='5'>
-      <div class='background' style="background: url('img/SCENE (5).png')"></div>
-      <div class="bsq-button animated" style='bottom: 20px;right: 20px;' onclick='nextBUTTON()'>TIẾP THEO</div>
+      <div class='background' style="background: url('img/SCENE (5).png')" onclick='nextBUTTON()'></div>
+      <!--<div class="bsq-button animated" style='bottom: 20px;right: 20px;' >TIẾP THEO</div>-->
     </div>
     <div class='page' bsq-id='6'>
       <div class='background' style="background: url('img/SCENE (6).png')"></div>
-      <div class="bsq-button animated" style='bottom: 20px;right: 20px;' onclick='nextBUTTON()'>TIẾP THEO</div>
+      <p class='time-text'>10</p>
+      <div class='main-picture'>
+        <img class='obj-img' src='img/BIG/BIG (1).png' original-id='1' game-id='1' />
+        <img class='obj-img' src='img/BIG/BIG (2).png' original-id='2' game-id='2' />
+        <img class='obj-img' src='img/BIG/BIG (3).png' original-id='3' game-id='3' />
+        <img class='obj-img' src='img/BIG/BIG (4).png' original-id='4' game-id='4' />
+        <img class='obj-img' src='img/BIG/BIG (5).png' original-id='5' game-id='5' />
+        <img class='obj-img' src='img/BIG/BIG (6).png' original-id='6' game-id='6' />
+        <img class='obj-img' src='img/BIG/BIG (7).png' original-id='7' game-id='7' />
+        <img class='obj-img' src='img/BIG/BIG (8).png' original-id='8' game-id='8' />
+        <img class='obj-img' src='img/BIG/BIG (9).png' original-id='9' game-id='9' />
+      </div>
+      <img class='obj-fail' src='img/FAIL.png' style='position: absolute; z-index: 10;left: 310px;top: 160px;display: none' />
+      
+      <!--<div class="bsq-button animated" style='bottom: 20px;right: 20px;' onclick='nextBUTTON()'>TIẾP THEO</div>-->
     </div>
     <div class='page' bsq-id='7'>
-      <div class='background' style="background: url('img/SCENE (7).png')"></div>
-      <div class="bsq-button animated" style='bottom: 20px;right: 20px;' onclick='nextBUTTON()'>TIẾP THEO</div>
+      <div class='background' style="background: url('img/SCENE (7).png?89')"></div>
+      
+      <p class='time-text-result'>10</p>
+      
+      <!--<div class="bsq-button animated" style='bottom: 20px;right: 20px;' onclick='nextBUTTON()'>TIẾP THEO</div>-->
     </div>
     <div class='page' bsq-id='8'>
-      <div class='background' style="background: url('img/SCENE (8).png')"></div>
-      <div class="bsq-button animated" style='bottom: 20px;right: 20px;' onclick='nextBUTTON()'>TIẾP THEO</div>
+      <div class='background' style="background: url('img/SCENE (8).png?89')"></div>
+      <!--<div class="bsq-button animated" style='bottom: 20px;right: 20px;' onclick='nextBUTTON()'>TIẾP THEO</div>-->
     </div>
-    <div class='page' bsq-id='9'>
-      <div class='background' style="background: url('img/SCENE (9).png')"></div>
-      <div class="bsq-button animated" style='bottom: 20px;right: 20px;' onclick='nextBUTTON()'>TIẾP THEO</div>
-    </div>
+    
     
     <div class='bsq-hidden-button' onclick='restartApp()'></div>
     
