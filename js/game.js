@@ -14,11 +14,12 @@ var user = {
 
 var GAME_PREVIEW = 1;
 var GAME_RUN = 2;
+var GAME_WIN = 3;
 var GAME_STATE = GAME_PREVIEW;
 
 $(document).ready(function() {
     FastClick.attach(document.body);
-    $(".time-text").html(cntPreview)
+    $(".time-text").html(cntPreview+"s")
     setTimeout(function(){
       
       $("#scene01-ele01").show();
@@ -103,7 +104,7 @@ function nextBUTTON() {
 
     if (current == 1) {
         current = 3;
-        setTimeout(function(){$("#input01").focus();},300)
+        //setTimeout(function(){$("#input01").focus();},300)
       
     }else if (current == 4) {
       
@@ -118,8 +119,8 @@ function nextBUTTON() {
             $(".main-picture").show();
             $(".main-picture").addClass("expandOpen")
             
-            $(".time-text").show()
-            $(".time-text").addClass("slideUp")
+            $(".time-panel").show()
+            $(".time-panel").addClass("slideUp")
             countPreview();
       },100)
         
@@ -282,7 +283,15 @@ function selectImage(obj){
         if (checkGame()) {
             clearTimeout(gamingTIMEOUT);
             //alert("DONE")
-            nextBUTTON();
+            GAME_STATE = GAME_WIN;
+            
+            $(".main-picture").removeClass("expandOpen")
+            $(".main-picture").addClass("fadeIn")
+            
+            setTimeout(function(){
+                  nextBUTTON();
+            },5000)
+            
         }
         // alert(drag_obj_1)
     }
@@ -294,7 +303,7 @@ function selectImage(obj){
 function countPreview() {
     setTimeout(function() {
         cntPreview -= 1;
-        $(".time-text").html(checkNumber( cntPreview ))
+        $(".time-text").html(checkNumber( cntPreview )+"s")
         if (cntPreview <= 0) {
             gaming();
         } else {
@@ -306,7 +315,8 @@ function countPreview() {
 function gaming() {
       GAME_STATE = GAME_RUN;
     bsqinitGame();
-    $(".time-text").html(checkNumber( Math.round(cntGameTiming / 1000) ))
+    $(".time-text").html(checkNumber( Math.round(cntGameTiming / 1000) )+"s")
+    $(".time-label2").html("để hoàn thành trò chơi");
     countGameTiming()
 }
 
@@ -373,7 +383,7 @@ var gamingTIMEOUT;
 function countGameTiming() {
     gamingTIMEOUT = setTimeout(function() {
         cntGameTiming -= 100;
-        $(".time-text").html(checkNumber( Math.round(cntGameTiming / 1000) ))
+        $(".time-text").html(checkNumber( Math.round(cntGameTiming / 1000) )+"s")
         if (cntGameTiming <= 0) {
             $(".obj-fail").show();
             saveScore();

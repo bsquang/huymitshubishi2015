@@ -302,17 +302,21 @@ top: 140px;
     z-index: 9;
     width: 610px;
     left: 310px;
-    top: 160px;
+    top: 170px;
 }
 
-.time-text{
-      position: absolute;
-    color: white;
-    font-size: 230px;
+.time-panel{
+    position: absolute;
     z-index: 9;
-    left: 60px;
-    bottom: 60px;
+    left: 90px;
+    top: 240px;
+    color: white;
+    text-align: center;
     display: none;
+    width: 180px;
+}
+.time-text{
+    font-size: 120px;
 }
 
 .time-text-result{
