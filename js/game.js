@@ -285,6 +285,8 @@ function selectImage(obj){
             //alert("DONE")
             GAME_STATE = GAME_WIN;
             
+            $(".time-panel").hide()
+            $(".main-picture").css({"left":"230px"})
             $(".main-picture").removeClass("expandOpen")
             $(".main-picture").addClass("fadeIn")
             
