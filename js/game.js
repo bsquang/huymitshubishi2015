@@ -1,385 +1,409 @@
-var listWord = [{
-      "word": "<img src=\"img/ICON01.png\"/>",
-      "score": "50"
-  }, {
-      "word": "<img src=\"img/ICON02.png\"/>",
-      "score": "50"
-  }, {
-      "word": "<img src=\"img/ICON03.png\"/>",
-      "score": "50"
-  }, {
-      "word": "<img src=\"img/ICON04.png\"/>",
-      "score": "50"
-  }, {
-      "word": "<img src=\"img/ICON05.png\"/>",
-      "score": "50"
-  }, {
-      "word": "<img src=\"img/ICON06.png\"/>",
-      "score": "50"
-  }, {
-      "word": "<img src=\"img/ICON07.png\"/>",
-      "score": "50"
-  }, {
-      "word": "<img src=\"img/ICON08.png\"/>",
-      "score": "50"
-  }];
-  
-  var arrayBtnID = [1, 2, 3, 4, 4, 5, 6, 7, 8, 2, 1, 8, 7, 6, 5, 3];
-  var listState = {
-      "home": "1",
-      "game": "2",
-      "finish": "3",
-      "end": "4"
-  };
-  
-  var listTile = {
-      "newgame": "Game Tìm Ô Giống Nhau",
-      "ready": "Chuẩn Bị",
-      "start": "Bắt Đầu",
-      "win": "Chúc Mừng Bạn Đã Chiến Thắng",
-      "lose": "Bạn Đã Thua"
-  };
-  
-  var waitTime = 11; //10 giay cho truoc khi choi
-  var playTime = 61; //1 phut choi game
-  var btnSelected = null;
-  var btnSelected2 = null;
-  // var isSelected = false;
-  var isStart = false;
-  var isClockRun = false;
-  var countBtn = 0;
-  var mScore = 0;
-  
-  var current = 1;
-  
-  $(document).ready(function() {
-      FastClick.attach(document.body);
-      //readyGame();
-      
-      //changeState("home");      
-      eventListener();
-      //autoScale();
-  });
-  
-  function autoScale() {
-      var defaultWidth = 1024;
-      var defaultHeight = 768;
-      var thisWidth = screen.width;
-      var thisHeight = screen.height;
-      console.log(thisWidth + " / " + defaultWidth);
-      console.log(thisHeight + " / " + defaultHeight);
-      var x = 1;
-      var y = 1;
-  
-      scalePage(thisWidth / defaultWidth, thisHeight / defaultHeight);
-  }
-  
-  function scalePage(x, y) {
-      console.log(x + "," + y);
-      $('.wrapper').css({
-          '-webkit-transform': 'scale(' + x + "," + y + ')',
-          '-moz-transform': 'scale(' + x + "," + y + ')',
-          '-ms-transform': 'scale(' + x + "," + y + ')',
-          '-o-transform': 'scale(' + x + "," + y + ')',
-          'transform': 'scale(' + x + "," + y + ')'
-      });
-  
-  }
-  
-  function eventListener() {
-      $(".btn-game").bind('click', function(event) {
-          if (!$(this).hasClass("btn-touched") && isStart) {
-              $(this).addClass("btn-touched");
-              //isSelected = true;
-              if (btnSelected != null) {
-                  btnSelected2 = $(this);
-                  
-                  if (btnSelected.attr("data-id") == btnSelected2.attr("data-id")) {
-                    
-                    mScore += 50;
-                    
-                    //btnSelected.css('opacity', '0.0');
-                    //btnSelected2.css('opacity', '0.0');
-                    
-                    btnSelected = null;
-                    btnSelected2 = null;                    
-                    
-                    $("#score").text(checkScore(mScore));
-                    
-                    countBtn -= 2;
-                    if (countBtn <= 0) {
-                      
-                      stopGame();
-                    }
-  
-                  } else {
-                    
-                    mScore -= 20;
-                    $("#score").text(checkScore(mScore));
-                    
-                    setTimeout(function(){
-                      
-                      btnSelected.removeClass("btn-touched");
-                      btnSelected2.removeClass("btn-touched");
-                      btnSelected = null;
-                      btnSelected2 = null;                    
-                      
-                    },200)
-                    
-                    
-                  }
-                  
-              } else {
-                  btnSelected = $(this);
-              }
-          }
-          //console.log(event);
-  
-      });
-  
-      $(".btnStart").bind('click', function(event) {
-          changeState("play");
-      });
-      $(".btnMenu").bind('click', function(event) {
-          var btnId = $(this).attr("btn-id");
-          switch (btnId) {
-              case "help":
-                  break;
-              case "rate":
-                  break;
-              case "info":
-                  break;
-          }
-      });
-      $(".btnRePlay").bind('click', function(event) {
-          changeState("play");
-      });
-      $(".btnExit").bind('click', function(event) {
-          changeState("home");
-      });
-  }
-  
-  
-  function changeState(state) {
-      $(".page").hide();
-      switch (state) {
-          case "home":
-              $("." + state).show();
-              break;
-          case "play":
-              readyGame();
-              $("." + state).show();
-              break;
-          case "finish":
-              $("." + state).show();
-              break;
-          case "end":
-              $("." + state).show();
-              break;
-          case "help":
-              $("." + state).show();
-              break;
-      }
-  
-  }
-  
-  function gotoPage(id){
-    
-    $(".page").hide();
-    $(".page[bsq-id="+id+"]").fadeIn(300);
-    
-    current = id;
-  }
-  $("#input01").change(function(){checkINPUT()});
-   $("#input02").change(function(){checkINPUT()});
-    $("#input03").change(function(){checkINPUT()});
-    
-  function checkINPUT() {
-      if ($("#input01").val() != '' & $("#input02").val() != '' & $("#input03").val() != '' ) {
-            $("#btn-next").show();
-      }
-  }
-  function nextBUTTON() {
-    
-    $(window).scrollTop(0);
-    
-    if (current == 5) {
-      countPreview();
-      current += 1;  
-    }
-    else if (current == 6) {
-      
-      if (cntGameTiming > 0) {
-            
-            var finalScore = 15000 - cntGameTiming;
-            $(".time-text-result").html(finalScore+"<br>ms")
-            current = 7;
-            
-            setTimeout(function(){nextBUTTON()},3000)
-      }
-      
-    }
-    else if (current == 7) {
-      setTimeout(function(){nextBUTTON()},3000)
-      current = 8;
-    }
-    else if (current == 8) {
-      location.href = '';
-    }
-    else{      
-      current += 1;      
-    }
-    
-    gotoPage(current);  
-      
-  }
+var cntPreview = 10;
+var maxGameTiming = 60000;
+var cntGameTiming = maxGameTiming;
+var timeScoreView = 5000;
+var id_choice = 1;
+var current = 1;
 
-
- 
-  function shuffle(array) {
-      var currentIndex = array.length,
-          temporaryValue, randomIndex;
-  
-      // While there remain elements to shuffle...
-      while (0 !== currentIndex) {
-  
-          // Pick a remaining element...
-          randomIndex = Math.floor(Math.random() * currentIndex);
-          currentIndex -= 1;
-  
-          // And swap it with the current element.
-          temporaryValue = array[currentIndex];
-          array[currentIndex] = array[randomIndex];
-          array[randomIndex] = temporaryValue;
-      }
-  
-      return array;
-  }
-  
-  var arrayShuffer = [1,2,3,4,5,6,7,8,9];
-  var drag_obj_1 = undefined;
-  var drag_obj_2 = undefined;
-  
-  function bsqinitGame(){
-      arrayShuffer = shuffle(arrayShuffer);
-      
-      for(var i=0;i<arrayShuffer.length;i++){
-            var temp = $(".obj-img")[i];
-            console.log($(temp).attr("original-id") + " " + arrayShuffer[i]);
-            $(temp).attr("original-id", arrayShuffer[i])
-            temp.src = "img/BIG/BIG ("+arrayShuffer[i]+").png";
-      }
-      
-  }
-  function checkGame() {
-      for(var i=0;i<arrayShuffer.length;i++){
-            var temp = $(".obj-img")[i];
-            if ($(temp).attr("original-id") != $(temp).attr("game-id")) {
-                  return false;
-            }
-      }
-      return true;
-  }
-  $(".obj-img").click(function(){
-      
-      if (drag_obj_1 == undefined) {
-            drag_obj_1 = $(this)
-            
-            //alert(drag_obj_1)
-      }
-      else if (drag_obj_1 != undefined && drag_obj_2 == undefined) {
-            drag_obj_2 = $(this)
-            
-            drag_obj_1[0].src = "img/BIG/BIG ("+drag_obj_2.attr("original-id")+").png";
-            drag_obj_2[0].src = "img/BIG/BIG ("+drag_obj_1.attr("original-id")+").png";
-            
-            var old_1 = drag_obj_1.attr("original-id")
-            var old_2 = drag_obj_2.attr("original-id")
-            
-            drag_obj_1.attr("original-id" , old_2)
-            drag_obj_2.attr("original-id" , old_1)
-            
-            drag_obj_1 = drag_obj_2 = undefined;
-            
-            if(checkGame())
-            {
-                  clearTimeout(gamingTIMEOUT);
-                  //alert("DONE")
-                  nextBUTTON();
-            }
-            // alert(drag_obj_1)
-      }
-      
-      
-      
-})
-  
-  function initGame() {
-      
-      
-      
-  }
-  
-  var cntPreview = 10;
-  function countPreview() {
-      setTimeout(function(){
-            cntPreview -= 1;
-            $(".time-text").html(cntPreview)
-            if (cntPreview <= 0) {
-                  gaming();
-            }else{
-                  countPreview();
-            }
-      },1000)
-  }
-  
-  function gaming() {
-      bsqinitGame();
-      $(".time-text").html("15")
-      countGameTiming()
-  }
-  
-  var cntGameTiming = 15000;
-  var gamingTIMEOUT;
-  function countGameTiming() {
-      gamingTIMEOUT = setTimeout(function(){
-            cntGameTiming -= 100;
-            $(".time-text").html(cntGameTiming/1000)
-            if (cntGameTiming <= 0) {
-                  $(".obj-fail").show();
-                  setTimeout(function(){
-                        location.href = '';
-                  },3000)
-            }else{
-                  countGameTiming();
-            }
-      },100)
-  }
-  
-  
-  
-
-initSaveConfig();
-function initSaveConfig(){
-  if (localStorage.infoEnable == undefined) {
-    
-    localStorage.setItem('infoEnable','0')
-    
-  }
-  
-  if(localStorage.infoEnable == '0'){
-    
-  }else if(localStorage.infoEnable == '1'){
-    
-  }
-  
+var user = {
+      "name":"",
+      "mobile":"",
+      "email":"",
+      "score":""
 }
-function toggleInfo() {
-    if(localStorage.infoEnable == '0'){
-        localStorage.setItem('infoEnable','1');
-    }else if(localStorage.infoEnable == '1'){
-        localStorage.setItem('infoEnable','0');
+
+var GAME_PREVIEW = 1;
+var GAME_RUN = 2;
+var GAME_STATE = GAME_PREVIEW;
+
+$(document).ready(function() {
+    FastClick.attach(document.body);
+    $(".time-text").html(cntPreview)
+    setTimeout(function(){
+      
+      $("#scene01-ele01").show();
+      $("#scene01-ele01").addClass("fadeIn")
+      
+      setTimeout(function(){
+            $("#scene01-ele02").fadeIn();
+            $("#scene01-ele02").addClass("pulse")
+      }, 1500);
+
+      },200)
+    gotoPage(1)
+});
+
+function blockMove() {
+      event.preventDefault() ;
+}
+
+
+
+
+function gotoPage(id) {
+
+    $(".page").hide();
+    $(".page[bsq-id=" + id + "]").fadeIn(300);
+
+    current = id;
+}
+
+$("#input01").change(function() {
+    checkINPUT()
+});
+$("#input02").change(function() {
+    checkINPUT()
+});
+$("#input03").change(function() {
+    checkINPUT()
+});
+
+
+
+function checkINPUT() {
+      
+      var reg_mail = /^[A-Za-z0-9]+([_\.\-]?[A-Za-z0-9])*@[A-Za-z0-9]+([\.\-]?[A-Za-z0-9]+)*(\.[A-Za-z]+)+$/;
+      var bTest = false;
+      if ($("#input03").val() != '' && reg_mail.test($("#input03").val()) == false) {
+            alert('Email không hợp lệ (ví dụ: abc@gmail.com)')
+            
+            bTest = true;
+      }
+      
+      if ($("#input02").val() != '' && isNaN($("#input02").val()) == true) {
+            alert('Số điện thoại phải là kiểu số')
+            
+            bTest = true;
+      }else if ($("#input02").val().length > 11 && isNaN($("#input02").val()) == false) {
+            alert('Số điện thoại dài quá 11 số')
+            bTest = true;
+      }else if ($("#input02").val() != '' && $("#input02").val().length < 8 && isNaN($("#input02").val()) == false) {
+            alert('Số điện thoại phải lớn hơn 8 số')
+            bTest = true;
+      }
+      
+      if (bTest) {
+            $("#btn-next").hide();
+            return;
+      }
+      if ($("#input01").val() != '' & $("#input02").val() != '' & $("#input03").val() != '') {
+        
+            user.name = $("#input01").val();
+            user.mobile = $("#input02").val();
+            user.email = $("#input03").val();
+            
+            $("#btn-next").show();
+            $("#btn-next").addClass('pulse')
+      }
+}
+
+function nextBUTTON() {
+
+    $(window).scrollTop(0);
+
+    if (current == 1) {
+        current = 3;
+        setTimeout(function(){$("#input01").focus();},300)
+      
+    }else if (current == 4) {
+      
+      $(".itemThumb").show();
+      $(".itemThumb").addClass("bigEntrance")
+      
+      current += 1;
     }
-    
-    restartApp();
+    else if (current == 5) {
+        setTimeout(function(){
+            
+            $(".main-picture").show();
+            $(".main-picture").addClass("expandOpen")
+            
+            $(".time-text").show()
+            $(".time-text").addClass("slideUp")
+            countPreview();
+      },100)
+        
+        
+        current += 1;
+    } else if (current == 6) {
+
+        if (cntGameTiming > 0) {
+
+            var finalScore = maxGameTiming - cntGameTiming;
+            user.score = finalScore;
+            saveScore();
+            $(".time-text-result").html(finalScore + "<br>ms")
+            
+            getTopScore();
+            
+            current = 8;
+
+            setTimeout(function() {
+                nextBUTTON()
+            }, timeScoreView)
+        }
+
+    } else if (current == 7) {
+        //setTimeout(function() {
+        //    nextBUTTON()
+        //}, 3000)
+        
+        current = 8;
+    } else if (current == 8) {
+        location.href = '';
+    } else {
+        current += 1;
+    }
+
+    gotoPage(current);
+
+}
+
+
+
+function shuffle(array) {
+    var currentIndex = array.length,
+        temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}
+
+var arrayShuffer = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+var drag_obj_1 = undefined;
+var drag_obj_2 = undefined;
+
+function bsqinitGame() {
+    arrayShuffer = shuffle(arrayShuffer);
+
+    for (var i = 0; i < arrayShuffer.length; i++) {
+        var temp = $(".itemList")[i];
+        console.log($(temp).attr("original-id") + " " + arrayShuffer[i]);
+        $(temp).attr("original-id", arrayShuffer[i])
+        $(temp).find("img")[0].src = "img/CAR0"+id_choice+"/CAR_ELE_0"  + arrayShuffer[i] + ".png";
+    }
+
+}
+
+function checkGame() {
+    for (var i = 0; i < arrayShuffer.length; i++) {
+        var temp = $(".itemList")[i];
+        if ($(temp).attr("original-id") != $(temp).attr("game-id")) {
+            return false;
+        }
+    }
+    return true;
+}
+function checkNumber(num){
+      if (num<10) {
+            return "0"+num;
+      }
+      return num;
+}
+function selectCar(obj){
+      id_choice = $(obj).attr("bsq-id");
+      
+      for (var i = 0; i < arrayShuffer.length; i++) {
+        var temp = $(".itemList")[i];       
+        $(temp).attr("original-id", arrayShuffer[i])
+        $(temp).find("img")[0].src = "img/CAR0"+id_choice+"/CAR_ELE_0"  + arrayShuffer[i] + ".png";
+      }
+      
+      $(".itemThumb").removeClass("pulse");
+      $(obj).addClass('pulse')
+      
+      setTimeout(function(){
+      
+            $("#btn-select-next").show();
+            $("#btn-select-next").addClass('slideLeft')
+            
+            setTimeout(function(){$("#btn-select-next").addClass('pulse')},1000)
+      
+      
+      },200)
+     
+}
+function selectImage(obj){      
+      if (GAME_STATE == GAME_PREVIEW) {
+            return;
+      }
+    if (drag_obj_1 == undefined) {
+        drag_obj_1 = $(obj)
+        
+        $(obj).find(".overlay-select").show();
+        $(obj).addClass('pulse')
+        
+
+        //alert(drag_obj_1)
+    } else if (drag_obj_1 != undefined && $(obj).attr("original-id") != drag_obj_1.attr("original-id") && drag_obj_2 == undefined) {
+        drag_obj_2 = $(obj)
+        
+        console.log("img/CAR0"+id_choice+"/CAR_ELE_0"  + drag_obj_2.attr("original-id") + ".png")
+        console.log("img/CAR0"+id_choice+"/CAR_ELE_0"  + drag_obj_1.attr("original-id") + ".png")
+        
+        drag_obj_1.find("img")[0].src = "img/CAR0"+id_choice+"/CAR_ELE_0"  + drag_obj_2.attr("original-id") + ".png";
+        drag_obj_2.find("img")[0].src = "img/CAR0"+id_choice+"/CAR_ELE_0"  + drag_obj_1.attr("original-id") + ".png";
+        
+            $(drag_obj_1).addClass("changePosAni")
+            $(drag_obj_2).addClass("changePosAni")
+            
+            $(drag_obj_1).removeClass('pulse')
+            
+            setTimeout(function(){
+                  $(drag_obj_1).removeClass("changePosAni")
+                  $(drag_obj_2).removeClass("changePosAni")
+            },500)
+        
+
+        var old_1 = drag_obj_1.attr("original-id")
+        var old_2 = drag_obj_2.attr("original-id")
+
+        drag_obj_1.attr("original-id", old_2)
+        drag_obj_2.attr("original-id", old_1)
+        
+        drag_obj_1.find(".overlay-select").hide();
+
+        drag_obj_1 = drag_obj_2 = undefined;
+        
+        
+
+        if (checkGame()) {
+            clearTimeout(gamingTIMEOUT);
+            //alert("DONE")
+            nextBUTTON();
+        }
+        // alert(drag_obj_1)
+    }
+
+
+
+}
+
+function countPreview() {
+    setTimeout(function() {
+        cntPreview -= 1;
+        $(".time-text").html(checkNumber( cntPreview ))
+        if (cntPreview <= 0) {
+            gaming();
+        } else {
+            countPreview();
+        }
+    }, 1000)
+}
+
+function gaming() {
+      GAME_STATE = GAME_RUN;
+    bsqinitGame();
+    $(".time-text").html(checkNumber( Math.round(cntGameTiming / 1000) ))
+    countGameTiming()
+}
+
+function removeDauTiengViet(content){
+      var str = content;
+      str= str.toLowerCase();
+      str= str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a");
+      str= str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e");
+      str= str.replace(/ì|í|ị|ỉ|ĩ/g,"i");
+      str= str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o");
+      str= str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u");
+      str= str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y");
+      str= str.replace(/đ/g,"d");
+      str= str.replace(/!|@|\$|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\'| |\"|\&|\#|\[|\]|~/g," ");
+      str= str.replace(/-+-/g," ");
+      str= str.replace(/^\-+|\-+$/g,"");
+      return str;
+}
+function checkName(content){
+      
+      if (content.length > 22) {
+           content = content.substring(0,22)
+      }
+      return content.toUpperCase();
+}
+function getTopScore() {
+      var arrayTopScore = list_data_local;
+      var tempDIVParent="";
+      
+      arrayTopScore.sort(function(a, b) {
+            return parseFloat(a.score) - parseFloat(b.score);
+        });
+      
+      if (arrayTopScore.length > 8) {
+            arrayTopScore = arrayTopScore.slice(0,8);
+      }
+      
+      for(var i=0;i<arrayTopScore.length;i++){
+            
+            var divContent = "<div class='itemScore group'>";
+            divContent += "<p class='item-score-text'>"+checkNumber(Math.round((arrayTopScore[i].score / 1000)))+"</p>"
+            divContent += "<p class='item-score-name'>"+checkName(arrayTopScore[i].name)+"</p>"
+            divContent += "</div>"
+            
+            tempDIVParent += divContent;
+      }
+      
+      $(".listScore").append(tempDIVParent);      
+      $(".itemScore").show().addClass("slideUp");
+      
+}
+
+function saveScore(){
+      list_data_local.push(user);
+      data2Local();
+}
+function clearDataLocal(){
+      list_data_local = [];
+      data2Local();
+}
+
+var gamingTIMEOUT;
+
+function countGameTiming() {
+    gamingTIMEOUT = setTimeout(function() {
+        cntGameTiming -= 100;
+        $(".time-text").html(checkNumber( Math.round(cntGameTiming / 1000) ))
+        if (cntGameTiming <= 0) {
+            $(".obj-fail").show();
+            saveScore();
+            setTimeout(function() {
+                location.href = '';
+            }, 3000)
+        } else {
+            countGameTiming();
+        }
+    }, 100)
+}
+
+
+
+var list_data_local = [];
+initDataLocal();
+function initDataLocal(){
+  if (localStorage.list_data_local == undefined) {    
+    localStorage.setItem('list_data_local','[]')    
+  }else{    
+    var temp = JSON.parse(localStorage.list_data_local);
+	list_data_local = temp;    
+  }
+}
+function data2Local(){
+  
+  var data_json = JSON.stringify(list_data_local);
+  localStorage.list_data_local = data_json; 
+}
+
+function restartApp() {
+      location.reload();
 }

@@ -13,12 +13,16 @@
   
 </head>
 
-<body>
+<body ontouchmove='blockMove()'>
   
   <div class="wrapper">
     
-    <div class='page' bsq-id='1' style='display: block'>
-      <div class='background' style="background: url('img/SCENE (1).png')" onclick='nextBUTTON()'></div>
+    <div class='page' bsq-id='1' style='display: none'>   
+      <div class='background' style="background: url('img/SCENE (1).png')" ></div>
+      <img id='scene01-ele01' src='img/SCENE01_ELE_01.png' style='position: absolute;bottom: 60px;left: 0;z-index: 99;display: none;'>
+      <img id='scene01-ele02' src='img/BUTTON_START.png' style='position: absolute;bottom: 25px;left:395px;z-index: 99;display: none;' onclick='nextBUTTON()'>
+     
+      
       <!--<div class='bsq-button animated' style='bottom: 20px;right: 20px;' onclick='nextBUTTON()'>TIẾP THEO</div>-->
     </div>
     <div class='page' bsq-id='2'>
@@ -28,34 +32,106 @@
     <div class='page' bsq-id='3'>
       <div class='background' style="background: url('img/SCENE (3).png')"></div>
       <div style='position: absolute;    text-align: center;    width: 700px;    z-index: 9;    left: 180px;        top: 205px;'>
-        <input id='input01' style="border: none; margin-bottom: 13px;    width: 100%;    height: 65px;    text-align: center;    font-size: 36px;" type="text" placeholder="Họ và tên" />
-        <input id='input02' style="border: none;margin-bottom: 13px;    width: 100%;    height: 65px;    text-align: center;    font-size: 36px;" type="text" placeholder="Số điện thoại" />
-        <input id='input03' style="border: none;    width: 100%;    height: 65px;    text-align: center;    font-size: 36px;" type="text" placeholder="Email" />
+        <input id='input01' style="border: none;background: none; margin-bottom: 13px;    width: 100%;    height: 65px;    text-align: center;    font-size: 36px;" type="text" placeholder="Họ và tên" />
+        <input id='input02' style="border: none;background: none;margin-bottom: 13px;    width: 100%;    height: 65px;    text-align: center;    font-size: 36px;" type="text" placeholder="Số điện thoại" />
+        <input id='input03' style="border: none;background: none;    width: 100%;    height: 65px;    text-align: center;    font-size: 36px;" type="text" placeholder="Email" />
       </div>
       <img id='btn-next' src='img/BUTTON.png' style='    position: absolute;    left: 460px;    top: 560px;    z-index: 9; display: none' onclick='nextBUTTON()'> 
       
     </div>
     <div class='page' bsq-id='4'>
       <div class='background' style="background: url('img/SCENE (4).png')"></div>
-      <div class='bsq-button animated' style='bottom: 20px;right: 20px;' onclick='nextBUTTON()'>TIẾP THEO</div>
+      <img class='pulse' src='img/BUTTON.png' style='    position: absolute;    left: 460px;    top: 560px;    z-index: 9; ' onclick='nextBUTTON()'> 
     </div>
     <div class='page' bsq-id='5'>
-      <div class='background' style="background: url('img/SCENE (5).png')" onclick='nextBUTTON()'></div>
+      <div class='background' style="background: url('img/SCENE (5).png')" ></div>
+      <div class='listThumb'>
+        <div class='itemThumb' ontouchstart='selectCar(this)' onmousedown='selectCar(this)' bsq-id='1'>
+          <div class='overlay-select'></div>
+          <img class='thumb-img' src='img/THUMB/CAR_THUMB_01.png' />
+        </div>
+        <div class='itemThumb' ontouchstart='selectCar(this)' onmousedown='selectCar(this)' bsq-id='2'>
+          <div class='overlay-select'></div>
+          <img class='thumb-img' src='img/THUMB/CAR_THUMB_02.png' />
+        </div>
+        <div class='itemThumb' ontouchstart='selectCar(this)' onmousedown='selectCar(this)' bsq-id='3'>
+          <div class='overlay-select'></div>
+          <img class='thumb-img' src='img/THUMB/CAR_THUMB_03.png' />
+        </div>
+        <div class='itemThumb' ontouchstart='selectCar(this)' onmousedown='selectCar(this)' bsq-id='4'>
+          <div class='overlay-select'></div>
+          <img class='thumb-img' src='img/THUMB/CAR_THUMB_04.png' />
+        </div>
+        <div class='itemThumb' ontouchstart='selectCar(this)' onmousedown='selectCar(this)' bsq-id='5'>
+          <div class='overlay-select'></div>
+          <img class='thumb-img' src='img/THUMB/CAR_THUMB_05.png' />
+        </div>
+        <div class='itemThumb' ontouchstart='selectCar(this)' onmousedown='selectCar(this)' bsq-id='6'>
+          <div class='overlay-select'></div>
+          <img class='thumb-img' src='img/THUMB/CAR_THUMB_06.png' />
+        </div>
+        <div class='itemThumb' ontouchstart='selectCar(this)' onmousedown='selectCar(this)' bsq-id='7'>
+          <div class='overlay-select'></div>
+          <img class='thumb-img' src='img/THUMB/CAR_THUMB_07.png' />
+        </div>
+        <div class='itemThumb' ontouchstart='selectCar(this)' onmousedown='selectCar(this)' bsq-id='8'>
+          <div class='overlay-select'></div>
+          <img class='thumb-img' src='img/THUMB/CAR_THUMB_08.png' />
+        </div>
+      </div>
+      <img id='btn-select-next' src='img/BUTTON.png' style='position: absolute; left: 665px;top: 520px; z-index: 9999; display: none;' onclick='nextBUTTON()'> 
       <!--<div class="bsq-button animated" style='bottom: 20px;right: 20px;' >TIẾP THEO</div>-->
     </div>
     <div class='page' bsq-id='6'>
       <div class='background' style="background: url('img/SCENE (6).png')"></div>
       <p class='time-text'>10</p>
-      <div class='main-picture'>
-        <img class='obj-img' src='img/BIG/BIG (1).png' original-id='1' game-id='1' />
-        <img class='obj-img' src='img/BIG/BIG (2).png' original-id='2' game-id='2' />
-        <img class='obj-img' src='img/BIG/BIG (3).png' original-id='3' game-id='3' />
-        <img class='obj-img' src='img/BIG/BIG (4).png' original-id='4' game-id='4' />
-        <img class='obj-img' src='img/BIG/BIG (5).png' original-id='5' game-id='5' />
-        <img class='obj-img' src='img/BIG/BIG (6).png' original-id='6' game-id='6' />
-        <img class='obj-img' src='img/BIG/BIG (7).png' original-id='7' game-id='7' />
-        <img class='obj-img' src='img/BIG/BIG (8).png' original-id='8' game-id='8' />
-        <img class='obj-img' src='img/BIG/BIG (9).png' original-id='9' game-id='9' />
+      <div class='main-picture' style='display: none;'>
+        
+        <div class='itemList' ontouchstart='selectImage(this)' onmousedown='selectImage(this)' original-id='1' game-id='1'>
+          <div class='overlay-select'></div>
+          <img class='obj-img' src='img/CAR01/CAR_ELE_01.png' />
+        </div>
+        <div class='itemList' ontouchstart='selectImage(this)' onmousedown='selectImage(this)' ooriginal-id='2' game-id='2'>
+          <div class='overlay-select'></div>
+          <img class='obj-img' src='img/CAR01/CAR_ELE_02.png' />
+        </div>
+        <div class='itemList' ontouchstart='selectImage(this)' onmousedown='selectImage(this)' ooriginal-id='3' game-id='3'>
+          <div class='overlay-select'></div>
+          <img class='obj-img' src='img/CAR01/CAR_ELE_03.png' />
+        </div>
+        <div class='itemList' ontouchstart='selectImage(this)' onmousedown='selectImage(this)' ooriginal-id='4' game-id='4'>
+          <div class='overlay-select'></div>
+          <img class='obj-img' src='img/CAR01/CAR_ELE_04.png' />
+        </div>
+        <div class='itemList' ontouchstart='selectImage(this)' onmousedown='selectImage(this)' ooriginal-id='5' game-id='5'>
+          <div class='overlay-select'></div>
+          <img class='obj-img' src='img/CAR01/CAR_ELE_05.png' />
+        </div>
+        <div class='itemList' ontouchstart='selectImage(this)' onmousedown='selectImage(this)' ooriginal-id='6' game-id='6'>
+          <div class='overlay-select'></div>
+          <img class='obj-img' src='img/CAR01/CAR_ELE_06.png' />
+        </div>
+        <div class='itemList' ontouchstart='selectImage(this)' onmousedown='selectImage(this)' ooriginal-id='7' game-id='7'>
+          <div class='overlay-select'></div>
+          <img class='obj-img' src='img/CAR01/CAR_ELE_07.png' />
+        </div>
+        <div class='itemList' ontouchstart='selectImage(this)' onmousedown='selectImage(this)' ooriginal-id='8' game-id='8'>
+          <div class='overlay-select'></div>
+          <img class='obj-img' src='img/CAR01/CAR_ELE_08.png' />
+        </div>
+        <div class='itemList' ontouchstart='selectImage(this)' onmousedown='selectImage(this)' ooriginal-id='9' game-id='9'>
+          <div class='overlay-select'></div>
+          <img class='obj-img' src='img/CAR01/CAR_ELE_09.png' />
+        </div>
+        
+       <!-- <img class='obj-img' src='img/CAR01/CAR_ELE_02.png' original-id='2' game-id='2' />
+        <img class='obj-img' src='img/CAR01/CAR_ELE_03.png' original-id='3' game-id='3' />
+        <img class='obj-img' src='img/CAR01/CAR_ELE_04.png' original-id='4' game-id='4' />
+        <img class='obj-img' src='img/CAR01/CAR_ELE_05.png' original-id='5' game-id='5' />
+        <img class='obj-img' src='img/CAR01/CAR_ELE_06.png' original-id='6' game-id='6' />
+        <img class='obj-img' src='img/CAR01/CAR_ELE_07.png' original-id='7' game-id='7' />
+        <img class='obj-img' src='img/CAR01/CAR_ELE_08.png' original-id='8' game-id='8' />
+        <img class='obj-img' src='img/CAR01/CAR_ELE_09.png' original-id='9' game-id='9' />-->
       </div>
       <img class='obj-fail' src='img/FAIL.png' style='position: absolute; z-index: 10;left: 310px;top: 160px;display: none' />
       
@@ -70,6 +146,9 @@
     </div>
     <div class='page' bsq-id='8'>
       <div class='background' style="background: url('img/SCENE (8).png?89')"></div>
+      <div class='listScore'>
+        
+      </div>
       <!--<div class="bsq-button animated" style='bottom: 20px;right: 20px;' onclick='nextBUTTON()'>TIẾP THEO</div>-->
     </div>
     
