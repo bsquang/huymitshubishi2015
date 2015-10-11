@@ -20,9 +20,18 @@ var GAME_STATE = GAME_PREVIEW;
 $(document).ready(function() {
     FastClick.attach(document.body);
     
-    $("#video-player")[0].loop = true;
+    gotoPage(1)
+       $("#video-player")[0].loop = true;
     $("#video-player")[0].play();
     
+      $("#scene01-ele01").show();
+      $("#scene01-ele01").addClass("fadeIn")
+      
+      setTimeout(function(){
+            $("#scene01-ele02").fadeIn();
+            $("#scene01-ele02").addClass("pulse")
+      }, 1500);
+ 
     
     $(".time-text").html(cntPreview+"s")
  
@@ -41,31 +50,6 @@ function setTimeoutResetApp() {
       },180000)
 }
 
-function stopVideoAndPlay(){
-      if (startGame!=undefined) {
-            return;
-      }
-       $("#video-panel").fadeOut();
-      $("#video-player")[0].pause();
-      
-      gotoPage(1)
-      $("#scene01-ele01").show();
-      $("#scene01-ele01").addClass("fadeIn")
-      
-      setTimeout(function(){
-            $("#scene01-ele02").fadeIn();
-            $("#scene01-ele02").addClass("pulse")
-      }, 1500);
-      
-      startGame = 1;
-}
-var startGame;
-$("#video-player").bind("mousedown",function(){
-     stopVideoAndPlay()
-})
-$("#video-player").bind("touchstart",function(){
-     stopVideoAndPlay()
-})
 
 function blockMove() {
       event.preventDefault() ;
@@ -136,6 +120,7 @@ function nextBUTTON() {
     $(window).scrollTop(0);
 
     if (current == 1) {
+      $("#video-player")[0].pause();
         current = 3;
         //setTimeout(function(){$("#input01").focus();},300)
       
