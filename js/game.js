@@ -19,9 +19,36 @@ var GAME_STATE = GAME_PREVIEW;
 
 $(document).ready(function() {
     FastClick.attach(document.body);
+    
+    $("#video-player")[0].loop = true;
+    $("#video-player")[0].play();
+    
+    
     $(".time-text").html(cntPreview+"s")
-    setTimeout(function(){
+ 
+    setTimeoutResetApp();
+});
+
+$("body").bind("mousedown",function(){setTimeoutResetApp()})
+$("body").bind("touchstart",function(){setTimeoutResetApp()})
+var timeoutReset;
+function setTimeoutResetApp() {
+      if (timeoutReset != undefined) {
+            clearTimeout(timeoutReset)
+      }
+      timeoutReset = setTimeout(function(){
+            location.reload();
+      },180000)
+}
+
+function stopVideoAndPlay(){
+      if (startGame!=undefined) {
+            return;
+      }
+       $("#video-panel").fadeOut();
+      $("#video-player")[0].pause();
       
+      gotoPage(1)
       $("#scene01-ele01").show();
       $("#scene01-ele01").addClass("fadeIn")
       
@@ -29,10 +56,16 @@ $(document).ready(function() {
             $("#scene01-ele02").fadeIn();
             $("#scene01-ele02").addClass("pulse")
       }, 1500);
-
-      },200)
-    gotoPage(1)
-});
+      
+      startGame = 1;
+}
+var startGame;
+$("#video-player").bind("mousedown",function(){
+     stopVideoAndPlay()
+})
+$("#video-player").bind("touchstart",function(){
+     stopVideoAndPlay()
+})
 
 function blockMove() {
       event.preventDefault() ;

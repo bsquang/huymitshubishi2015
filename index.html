@@ -16,9 +16,14 @@
 <body ontouchmove='blockMove()'>
   
   <div class="wrapper">
-    
+    <div id='video-panel' style='position: absolute;z-index: 999;left: 0;top: 0;'>
+      <video id='video-player' width="1024" height="768">
+        <source src="video/intro.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+      </video>
+    </div>
     <div class='page' bsq-id='1' style='display: none'>   
-      <div class='background' style="background: url('img/SCENE (1).png')" ></div>
+      <div class='background' style="background: url('img/SCENE-(1).jpg')" ></div>
       <img id='scene01-ele01' src='img/SCENE01_ELE_01.png' style='position: absolute;bottom: 60px;left: 0;z-index: 99;display: none;'>
       <img id='scene01-ele02' src='img/BUTTON_START.png' style='position: absolute;bottom: 25px;left:395px;z-index: 99;display: none;' onclick='nextBUTTON()'>
      
@@ -26,11 +31,11 @@
       <!--<div class='bsq-button animated' style='bottom: 20px;right: 20px;' onclick='nextBUTTON()'>TIẾP THEO</div>-->
     </div>
     <div class='page' bsq-id='2'>
-      <div class='background' style="background: url('img/SCENE (2).png')" onclick='nextBUTTON()'> </div>
+      <div class='background' style="background: url('img/SCENE-(2).jpg')" onclick='nextBUTTON()'> </div>
       <!--<div class='bsq-button animated' style='bottom: 20px;right: 20px;' onclick='nextBUTTON()'>TIẾP THEO</div>-->
     </div>
     <div class='page' bsq-id='3'>
-      <div class='background' style="background: url('img/SCENE (3).png')"></div>
+      <div class='background' style="background: url('img/SCENE-(3).jpg')"></div>
       <div style='position: absolute;    text-align: center;    width: 700px;    z-index: 9;    left: 180px;        top: 205px;'>
         <input id='input01' style="border: none;background: none; margin-bottom: 13px;    width: 100%;    height: 65px;    text-align: center;    font-size: 36px;" type="text" placeholder="Họ và tên" />
         <input id='input02' style="border: none;background: none;margin-bottom: 13px;    width: 100%;    height: 65px;    text-align: center;    font-size: 36px;" type="text" placeholder="Số điện thoại" />
@@ -40,11 +45,11 @@
       
     </div>
     <div class='page' bsq-id='4'>
-      <div class='background' style="background: url('img/SCENE (4).png')"></div>
+      <div class='background' style="background: url('img/SCENE-(4).jpg')"></div>
       <img class='pulse' src='img/BUTTON.png' style='    position: absolute;    left: 460px;    top: 560px;    z-index: 9; ' onclick='nextBUTTON()'> 
     </div>
     <div class='page' bsq-id='5'>
-      <div class='background' style="background: url('img/SCENE (5).png')" ></div>
+      <div class='background' style="background: url('img/SCENE-(5).jpg')" ></div>
       <div class='listThumb'>
         <div class='itemThumb' ontouchstart='selectCar(this)' onmousedown='selectCar(this)' bsq-id='1'>
           <div class='overlay-select'></div>
@@ -83,7 +88,7 @@
       <!--<div class="bsq-button animated" style='bottom: 20px;right: 20px;' >TIẾP THEO</div>-->
     </div>
     <div class='page' bsq-id='6'>
-      <div class='background' style="background: url('img/SCENE (6).png')"></div>
+      <div class='background' style="background: url('img/SCENE-(6).jpg')"></div>
       
       <div class='time-panel'>
         <p class='time-label' style='font-size: 40px;'>Bạn có</p>
@@ -143,14 +148,14 @@
       <!--<div class="bsq-button animated" style='bottom: 20px;right: 20px;' onclick='nextBUTTON()'>TIẾP THEO</div>-->
     </div>
     <div class='page' bsq-id='7'>
-      <div class='background' style="background: url('img/SCENE (7).png?89')"></div>
+      <div class='background' style="background: url('img/SCENE-(7).jpg?89')"></div>
       
       <p class='time-text-result'>10</p>
       
       <!--<div class="bsq-button animated" style='bottom: 20px;right: 20px;' onclick='nextBUTTON()'>TIẾP THEO</div>-->
     </div>
     <div class='page' bsq-id='8'>
-      <div class='background' style="background: url('img/SCENE (8).png?89')"></div>
+      <div class='background' style="background: url('img/SCENE-(8).jpg?89')"></div>
       <div class='listScore'>
         
       </div>
