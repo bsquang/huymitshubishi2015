@@ -167,6 +167,16 @@ body, html, textarea{
   z-index: 999;
 }
 
+.bsq-hidden-button-control{
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100px;
+  height: 100px;
+  
+  z-index: 999;
+}
+
 .bsq-hidden-button-left-top{
   position: absolute;
   left: 0;

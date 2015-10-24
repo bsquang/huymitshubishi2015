@@ -1,6 +1,8 @@
-var cntPreview = 10;
-var maxGameTiming = 60000;
-var cntGameTiming = maxGameTiming;
+var url_sync = 'http://www.lamhongdata.com/mitsubishi/';
+
+var cntPreview = 5;
+var maxGameTiming = 60000 * 30;
+var cntGameTiming = 0;
 var timeScoreView = 5000;
 var id_choice = 1;
 var current = 1;
@@ -9,7 +11,8 @@ var user = {
       "name":"",
       "mobile":"",
       "email":"",
-      "score":""
+      "score":"",
+      'dateCreated':getCurrentDateCreated()
 }
 
 var GAME_PREVIEW = 1;
@@ -33,7 +36,7 @@ $(document).ready(function() {
       }, 1500);
  
     
-    $(".time-text").html(cntPreview+"s")
+    $(".time-text").html("0"+cntPreview+"s")
  
     setTimeoutResetApp();
 });
@@ -146,21 +149,21 @@ function nextBUTTON() {
         current += 1;
     } else if (current == 6) {
 
-        if (cntGameTiming > 0) {
+        
 
-            var finalScore = maxGameTiming - cntGameTiming;
+            var finalScore = cntGameTiming;
             user.score = finalScore;
             saveScore();
-            $(".time-text-result").html(finalScore + "<br>ms")
+            //$(".time-text-result").html(finalScore + "<br>ms")
             
             getTopScore();
             
             current = 8;
 
-            setTimeout(function() {
-                nextBUTTON()
-            }, timeScoreView)
-        }
+            //setTimeout(function() {
+            //    nextBUTTON()
+            //}, timeScoreView)
+
 
     } else if (current == 7) {
         //setTimeout(function() {
@@ -335,8 +338,13 @@ function countPreview() {
 function gaming() {
       GAME_STATE = GAME_RUN;
     bsqinitGame();
-    $(".time-text").html(checkNumber( Math.round(cntGameTiming / 1000) )+"s")
-    $(".time-label2").html("để hoàn thành trò chơi");
+    
+    $(".time-text").hide();
+    $(".time-label2").hide();
+    $(".time-label").hide();
+    
+    //$(".time-text").html(checkNumber( Math.round(cntGameTiming / 1000) )+"s")
+    //$(".time-label2").html("để hoàn thành trò chơi");
     countGameTiming()
 }
 
@@ -402,21 +410,69 @@ var gamingTIMEOUT;
 
 function countGameTiming() {
     gamingTIMEOUT = setTimeout(function() {
-        cntGameTiming -= 100;
-        $(".time-text").html(checkNumber( Math.round(cntGameTiming / 1000) )+"s")
-        if (cntGameTiming <= 0) {
+      
+        cntGameTiming += 100;
+        
+        //$(".time-text").html(checkNumber( Math.round(cntGameTiming / 1000) )+"s")
+        
+        if (cntGameTiming >= maxGameTiming) {
             $(".obj-fail").show();
             saveScore();
+            
             setTimeout(function() {
                 location.href = '';
             }, 3000)
         } else {
             countGameTiming();
         }
+        
     }, 100)
 }
 
+function syncData() {  
+  
+  
+  if (list_data_local.length <= 0) {
+      alert('Không có dữ liệu để đồng bộ!');
+      return;
+  }
+  
+  var sync_data = {
+	'userData' : list_data_local	
+  }
+  var totalLength = list_data_local.length;
+  var data_json = JSON.stringify(sync_data);  
+  $.ajax({
+      type: "POST",
+      url: url_sync+"ajax.php?",
+      data: {
+          'action': 'sync',
+          'data': data_json
+      },
+      success: function (msg) {
+          var temp = JSON.parse(msg);
+          
+		  if(temp.result=='1') {		
+            alert('Đã gởi dữ liệu xong ! Total:' + totalLength);
+            
+            clearDataLocal();
+ 
+          }
+      }
+  });
+  
+}
 
+function checkData(){      
+      alert('Total : ' + list_data_local.length + " user");
+}
+
+function getCurrentDateCreated() {
+  
+  var current = new Date();
+  return (current.getMonth()+1)+"/"+current.getDate()+"/"+current.getFullYear()+" "+current.getHours()+":"+current.getMinutes()+":"+current.getSeconds();
+  
+}
 
 var list_data_local = [];
 initDataLocal();
@@ -432,6 +488,11 @@ function data2Local(){
   
   var data_json = JSON.stringify(list_data_local);
   localStorage.list_data_local = data_json; 
+}
+
+
+function openControl(){
+      gotoPage(9);
 }
 
 function restartApp() {
