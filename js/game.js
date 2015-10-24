@@ -20,6 +20,42 @@ var GAME_RUN = 2;
 var GAME_WIN = 3;
 var GAME_STATE = GAME_PREVIEW;
 
+var snd_click = new Audio("snd/click.mp3");
+var snd_bgm = new Audio("snd/bgm.ogg");
+var snd_win = new Audio("snd/win.mp3");
+
+var snd_image = new Audio("snd/image.mp3");
+var snd_tick = new Audio("snd/tick.mp3");
+
+function play_snd(type){
+      if (type == 1) {
+            snd_click.pause();
+            snd_click.currentTime  = 0;
+            snd_click.play();
+      }
+      if (type == 2) {
+            snd_bgm.play();
+            snd_bgm.loop = true;
+            snd_bgm.volume = 0.3;
+      }
+      if (type == 3) {
+            snd_win.play();
+      }
+      if (type == 4) {
+            snd_image.pause();
+            snd_image.volume = 1;
+            snd_image.currentTime  = 0;
+            snd_image.play();
+      }
+      if (type == 5) {
+            snd_tick.pause();
+            snd_tick.volume = 1;
+            snd_tick.currentTime  = 0;
+            snd_tick.play();
+      }
+}
+
+
 $(document).ready(function() {
     FastClick.attach(document.body);
     
@@ -121,10 +157,13 @@ function checkINPUT() {
 function nextBUTTON() {
 
     $(window).scrollTop(0);
+    
+    play_snd(1);
 
     if (current == 1) {
       $("#video-player")[0].pause();
         current = 3;
+        play_snd(2)
         //setTimeout(function(){$("#input01").focus();},300)
       
     }else if (current == 4) {
@@ -235,6 +274,9 @@ function checkNumber(num){
       return num;
 }
 function selectCar(obj){
+      
+      play_snd(1);
+      
       id_choice = $(obj).attr("bsq-id");
       
       for (var i = 0; i < arrayShuffer.length; i++) {
@@ -261,6 +303,9 @@ function selectImage(obj){
       if (GAME_STATE == GAME_PREVIEW) {
             return;
       }
+      
+      play_snd(4);
+      
     if (drag_obj_1 == undefined) {
         drag_obj_1 = $(obj)
         
@@ -311,6 +356,8 @@ function selectImage(obj){
             $(".main-picture").removeClass("expandOpen")
             $(".main-picture").addClass("fadeIn")
             
+            play_snd(3)
+            
             setTimeout(function(){
                   nextBUTTON();
             },5000)
@@ -324,6 +371,7 @@ function selectImage(obj){
 }
 
 function countPreview() {
+      play_snd(5);
     setTimeout(function() {
         cntPreview -= 1;
         $(".time-text").html(checkNumber( cntPreview )+"s")
@@ -453,13 +501,16 @@ function syncData() {
       success: function (msg) {
           var temp = JSON.parse(msg);
           
-		  if(temp.result=='1') {		
+		  if(temp.result=='1') {
+            play_snd(3);
             alert('Đã gởi dữ liệu xong ! Total:' + totalLength);
             
             clearDataLocal();
             
             $("#btn-sync").html("Đồng bộ dữ liệu")
  
+          }else{
+            alert("Có lỗi hoặc chưa kết nối mạng")
           }
       }
   });
