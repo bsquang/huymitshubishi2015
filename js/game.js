@@ -437,6 +437,7 @@ function syncData() {
       return;
   }
   
+  $("#btn-sync").html("Đang đồng bộ...")
   var sync_data = {
 	'userData' : list_data_local	
   }
@@ -456,6 +457,8 @@ function syncData() {
             alert('Đã gởi dữ liệu xong ! Total:' + totalLength);
             
             clearDataLocal();
+            
+            $("#btn-sync").html("Đồng bộ dữ liệu")
  
           }
       }
