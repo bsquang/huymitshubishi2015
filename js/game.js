@@ -21,7 +21,7 @@ var GAME_WIN = 3;
 var GAME_STATE = GAME_PREVIEW;
 
 var snd_click = new Audio("snd/click.mp3");
-var snd_bgm = new Audio("snd/bgm.ogg");
+var snd_bgm = new Audio("snd/bgm.mp3");
 var snd_win = new Audio("snd/win.mp3");
 
 var snd_image = new Audio("snd/image.mp3");
